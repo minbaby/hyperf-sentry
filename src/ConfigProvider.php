@@ -26,8 +26,8 @@ class ConfigProvider
                 [
                     'id' => 'config',
                     'description' => 'The config for tracer.',
-                    'source' => __DIR__ . '/../publish/opentracing.php',
-                    'destination' => BASE_PATH . '/config/autoload/opentracing.php',
+                    'source' => __DIR__ . '/../publish/sentry.php',
+                    'destination' => BASE_PATH . '/config/autoload/sentry.php',
                 ],
             ],
         ];

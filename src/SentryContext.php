@@ -12,6 +12,8 @@ final class SentryContext
     public static function getHub(): HubInterface
     {
         if (!Context::has(static::SENTRY_HUB)) {
+            //TODO: event
+
             Context::set(static::SENTRY_HUB, make(HubInterface::class));
         }
         

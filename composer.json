@@ -1,5 +1,5 @@
 {
-    "name": "hyperf/demo",
+    "name": "minbaby/hyperf-sentry",
     "type": "library",
     "license": "MIT",
     "keywords": [
@@ -41,7 +41,7 @@
     },
     "extra": {
         "hyperf": {
-            "config": "MinBaby\\HyperfSentry\\ConfigProvider"
+            "config": "Minbaby\\HyperfSentry\\ConfigProvider"
         }
     }
 }
