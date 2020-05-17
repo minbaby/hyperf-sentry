@@ -16,6 +16,7 @@ class ConfigProvider
             'commands' => [
             ],
             'listeners' => [
+                AfterWorkerStartListener::class,
             ],
             'scan' => [
                 'paths' => [

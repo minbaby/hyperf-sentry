@@ -4,11 +4,14 @@ namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
+use Hyperf\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sentry\ClientBuilder;
 use Sentry\FlushableClientInterface;
+use Sentry\State\Scope;
 use \Throwable;
+use function Sentry\configureScope;
 
 class SentryHandler extends ExceptionHandler
 {
@@ -17,6 +20,8 @@ class SentryHandler extends ExceptionHandler
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+        $this->log = $this->container->get(LoggerFactory::class)->get('sentry');
+        $this->log->info('init');
     }
 
     /**
@@ -27,16 +32,25 @@ class SentryHandler extends ExceptionHandler
      */
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
+        $this->log->info('handle');
         $config = $this->container->get(ConfigInterface::class);
 
+
+        SentryContext::getHub()->configureScope(function (Scope $scope) {
+            $scope->setUser(['email' => 'minbaby@m.com']);
+        });
+
         SentryContext::getHub()->captureException($throwable);
+        $this->log->info('captureException');
 
-        $client = $clientBuilder = $this->container->get(ClientBuilder::class);
+        $clientBuilder = $this->container->get(ClientBuilder::class);
 
-        if ($client instanceof FlushableClientInterface) {
+        if (($client = $clientBuilder->getClient()) instanceof FlushableClientInterface) {
+            $this->log->info('flush');
             $client->flush((int) $config->get('sentry.flush_timeout', 2));
         }
 
+        $this->log->info('return');
         return $response;
     }
 
