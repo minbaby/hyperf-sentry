@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry\Integration;
 
 use Minbaby\HyperfSentry\SentryContext;
@@ -10,7 +13,6 @@ use Sentry\State\Scope;
 
 class Integration implements IntegrationInterface
 {
-
     /**
      * @var null|string
      */
@@ -24,7 +26,7 @@ class Integration implements IntegrationInterface
         Scope::addGlobalEventProcessor(function (Event $event): Event {
             $self = SentryContext::getHub()->getIntegration(self::class);
 
-            if (!$self instanceof self) {
+            if (! $self instanceof self) {
                 return $event;
             }
 
@@ -36,14 +38,12 @@ class Integration implements IntegrationInterface
 
     /**
      * Adds a breadcrumb if the integration is enabled for Laravel.
-     *
-     * @param Breadcrumb $breadcrumb
      */
     public static function addBreadcrumb(Breadcrumb $breadcrumb): void
     {
         $self = SentryContext::getHub()->getIntegration(self::class);
 
-        if (!$self instanceof self) {
+        if (! $self instanceof self) {
             return;
         }
 
@@ -52,14 +52,12 @@ class Integration implements IntegrationInterface
 
     /**
      * Configures the scope if the integration is enabled for Laravel.
-     *
-     * @param callable $callback
      */
     public static function configureScope(callable $callback): void
     {
         $self = SentryContext::getHub()->getIntegration(self::class);
 
-        if (!$self instanceof self) {
+        if (! $self instanceof self) {
             return;
         }
 
@@ -85,8 +83,8 @@ class Integration implements IntegrationInterface
     /**
      * Block until all async events are processed for the HTTP transport.
      *
-     * @internal This is not part of the public API and is here temporarily until
-     *  the underlying issue can be resolved, this method will be removed.
+     * @internal this is not part of the public API and is here temporarily until
+     *  the underlying issue can be resolved, this method will be removed
      */
     public static function flushEvents(): void
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
@@ -9,8 +11,7 @@ use Sentry\ClientBuilder;
 use Sentry\ClientBuilderInterface;
 
 /**
- * Class ClientBuilderFactory
- * @package Minbaby\HyperfSentry
+ * Class ClientBuilderFactory.
  * @see ClientBuilderInterface
  */
 class ClientBuilderFactory
@@ -39,11 +40,10 @@ class ClientBuilderFactory
                     new RequestIntegration(),
                 ],
                 'prefixes' => [$basePath],
-                'in_app_exclude' => [$basePath . "/vendor"],
+                'in_app_exclude' => [$basePath . '/vendor'],
             ],
             $userConfig
         );
-
 
         $clientBuilder = ClientBuilder::create($options);
         $clientBuilder->setSdkVersion(Version::SDK_VERSION);

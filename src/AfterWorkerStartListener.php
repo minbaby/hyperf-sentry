@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Minbaby\HyperfSentry;
-
 
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\AfterWorkerStart;
@@ -18,7 +18,6 @@ class AfterWorkerStartListener implements ListenerInterface
         $this->container = $container;
     }
 
-
     /**
      * @return string[] returns the events that you want to listen
      */
@@ -32,7 +31,7 @@ class AfterWorkerStartListener implements ListenerInterface
     /**
      * Handle the Event when the event is triggered, all listeners will
      * complete before the event is returned to the EventDispatcher.
-     * @param object|AfterWorkerStart $event
+     * @param AfterWorkerStart|object $event
      */
     public function process(object $event)
     {

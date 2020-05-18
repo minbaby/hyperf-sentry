@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
@@ -20,7 +22,7 @@ class HubFactory
 
     public function __invoke()
     {
-        /**@var ClientBuilder $clientBuilder */
+        /*@var ClientBuilder $clientBuilder */
         $clientBuilder = $this->container->get(ClientBuilder::class);
 
         $options = $clientBuilder->getOptions();
@@ -30,7 +32,7 @@ class HubFactory
         $options->setIntegrations(static function (array $integrations) use ($options, $userIntegrations) {
             $allIntegrations = array_merge($integrations, $userIntegrations);
 
-            if (!$options->hasDefaultIntegrations()) {
+            if (! $options->hasDefaultIntegrations()) {
                 return $allIntegrations;
             }
 
@@ -61,8 +63,6 @@ class HubFactory
 
     /**
      * Resolve the integrations from the user configuration with the container.
-     *
-     * @return array
      */
     protected function resolveIntegrationsFromUserConfig(): array
     {
@@ -78,7 +78,7 @@ class HubFactory
             } elseif (\is_string($userIntegration)) {
                 $resolvedIntegration = $this->container->get($userIntegration);
 
-                if (!($resolvedIntegration instanceof SdkIntegration\IntegrationInterface)) {
+                if (! ($resolvedIntegration instanceof SdkIntegration\IntegrationInterface)) {
                     throw new \RuntimeException('Sentry integrations should a instance of `\Sentry\Integration\IntegrationInterface`.');
                 }
 

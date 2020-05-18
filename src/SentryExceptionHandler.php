@@ -1,19 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
-use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Sentry\ClientBuilder;
 use Sentry\ClientBuilderInterface;
 use Sentry\FlushableClientInterface;
-use Sentry\State\Scope;
-use \Throwable;
-use function Sentry\configureScope;
+use Throwable;
 
 class SentryExceptionHandler extends ExceptionHandler
 {
@@ -27,8 +25,6 @@ class SentryExceptionHandler extends ExceptionHandler
 
     /**
      * Handle the exception, and return the specified result.
-     * @param Throwable $throwable
-     * @param ResponseInterface $response
      * @return ResponseInterface
      */
     public function handle(Throwable $throwable, ResponseInterface $response)

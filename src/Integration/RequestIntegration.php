@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Minbaby\HyperfSentry\Integration;
 
-
-use GuzzleHttp\Psr7\ServerRequest;
 use Hyperf\Utils\ApplicationContext;
 use Minbaby\HyperfSentry\SentryContext;
 use Psr\Http\Message\ServerRequestInterface;
@@ -13,7 +12,6 @@ use Sentry\Event;
 use Sentry\Exception\JsonException;
 use Sentry\Integration\IntegrationInterface;
 use Sentry\Options;
-use Sentry\SentrySdk;
 use Sentry\State\Scope;
 use Sentry\Util\JSON;
 
@@ -34,7 +32,7 @@ class RequestIntegration implements IntegrationInterface
     private const REQUEST_BODY_MEDIUM_MAX_CONTENT_LENGTH = 10 ** 4;
 
     /**
-     * @var Options|null The client options
+     * @var null|Options The client options
      */
     private $options;
 
@@ -45,7 +43,7 @@ class RequestIntegration implements IntegrationInterface
      */
     public function __construct(?Options $options = null)
     {
-        if (null !== $options) {
+        if ($options !== null) {
             @trigger_error(sprintf('Passing the options as argument of the constructor of the "%s" class is deprecated since version 2.1 and will not work in 3.0.', self::class), E_USER_DEPRECATED);
         }
 
@@ -64,7 +62,7 @@ class RequestIntegration implements IntegrationInterface
 
             // The client bound to the current hub, if any, could not have this
             // integration enabled. If this is the case, bail out
-            if (null === $integration || null === $client) {
+            if ($integration === null || $client === null) {
                 return $event;
             }
 
@@ -77,15 +75,15 @@ class RequestIntegration implements IntegrationInterface
     /**
      * Applies the information gathered by the this integration to the event.
      *
-     * @param \Sentry\Integration\RequestIntegration $self    The current instance of the integration
-     * @param Event                       $event   The event that will be enriched with a request
-     * @param ServerRequestInterface|null $request The Request that will be processed and added to the event
+     * @param \Sentry\Integration\RequestIntegration $self The current instance of the integration
+     * @param Event $event The event that will be enriched with a request
+     * @param null|ServerRequestInterface $request The Request that will be processed and added to the event
      */
     public static function applyToEvent(self $self, Event $event, ?ServerRequestInterface $request = null): void
     {
         @trigger_error(sprintf('The "%s" method is deprecated since version 2.1 and will be removed in 3.0.', __METHOD__), E_USER_DEPRECATED);
 
-        if (null === $self->options) {
+        if ($self->options === null) {
             throw new \BadMethodCallException('The options of the integration must be set.');
         }
 
@@ -94,7 +92,7 @@ class RequestIntegration implements IntegrationInterface
 
     protected function getServerRequest(?ServerRequestInterface $request): ?ServerRequestInterface
     {
-        if (!empty($request)) {
+        if (! empty($request)) {
             return $request;
         }
 
@@ -109,7 +107,7 @@ class RequestIntegration implements IntegrationInterface
     {
         $request = $this->getServerRequest($request);
 
-        if (null === $request) {
+        if ($request === null) {
             return;
         }
 
@@ -134,7 +132,7 @@ class RequestIntegration implements IntegrationInterface
 
             $userContext = $event->getUserContext();
 
-            if (null === $userContext->getIpAddress() && isset($serverParams['REMOTE_ADDR'])) {
+            if ($userContext->getIpAddress() === null && isset($serverParams['REMOTE_ADDR'])) {
                 $userContext->setIpAddress($serverParams['REMOTE_ADDR']);
             }
         } else {
@@ -143,7 +141,7 @@ class RequestIntegration implements IntegrationInterface
 
         $requestBody = $this->captureRequestBody($options, $request);
 
-        if (!empty($requestBody)) {
+        if (! empty($requestBody)) {
             $requestData['data'] = $requestBody;
         }
 
@@ -164,7 +162,7 @@ class RequestIntegration implements IntegrationInterface
         return array_filter(
             $headers,
             static function (string $key) use ($keysToRemove): bool {
-                return !\in_array(strtolower($key), $keysToRemove, true);
+                return ! \in_array(strtolower($key), $keysToRemove, true);
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -176,7 +174,7 @@ class RequestIntegration implements IntegrationInterface
      * the parsing fails then the raw data is returned. If there are submitted
      * fields or files, all of their information are parsed and returned.
      *
-     * @param Options                $options       The options of the client
+     * @param Options $options The options of the client
      * @param ServerRequestInterface $serverRequest The server request
      *
      * @return mixed
@@ -187,9 +185,9 @@ class RequestIntegration implements IntegrationInterface
         $requestBody = $serverRequest->getBody();
 
         if (
-            'none' === $maxRequestBodySize ||
-            ('small' === $maxRequestBodySize && $requestBody->getSize() > self::REQUEST_BODY_SMALL_MAX_CONTENT_LENGTH) ||
-            ('medium' === $maxRequestBodySize && $requestBody->getSize() > self::REQUEST_BODY_MEDIUM_MAX_CONTENT_LENGTH)
+            $maxRequestBodySize === 'none' ||
+            ($maxRequestBodySize === 'small' && $requestBody->getSize() > self::REQUEST_BODY_SMALL_MAX_CONTENT_LENGTH) ||
+            ($maxRequestBodySize === 'medium' && $requestBody->getSize() > self::REQUEST_BODY_MEDIUM_MAX_CONTENT_LENGTH)
         ) {
             return null;
         }
@@ -200,11 +198,11 @@ class RequestIntegration implements IntegrationInterface
             \is_array($requestData) ? $requestData : []
         );
 
-        if (!empty($requestData)) {
+        if (! empty($requestData)) {
             return $requestData;
         }
 
-        if ('application/json' === $serverRequest->getHeaderLine('Content-Type')) {
+        if ($serverRequest->getHeaderLine('Content-Type') === 'application/json') {
             try {
                 return JSON::decode($requestBody->getContents());
             } catch (JsonException $exception) {
