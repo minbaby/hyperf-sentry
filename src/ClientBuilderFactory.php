@@ -3,9 +3,16 @@
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
+use Minbaby\HyperfSentry\Integration\RequestIntegration;
 use Psr\Container\ContainerInterface;
 use Sentry\ClientBuilder;
+use Sentry\ClientBuilderInterface;
 
+/**
+ * Class ClientBuilderFactory
+ * @package Minbaby\HyperfSentry
+ * @see ClientBuilderInterface
+ */
 class ClientBuilderFactory
 {
     public function __invoke(ContainerInterface $container)
@@ -23,17 +30,22 @@ class ClientBuilderFactory
             $userConfig['breadcrumbs.sql_bindings']
         );
 
+        $basePath = defined('\BASE_PATH') ? \BASE_PATH : '';
+
         $options = array_merge(
             [
-                'prefixes' => [\BASE_PATH],
-                'in_app_exclude' => [\BASE_PATH . "/vendor"],
+                'default_integrations' => false,
+                'integrations' => [
+                    new RequestIntegration(),
+                ],
+                'prefixes' => [$basePath],
+                'in_app_exclude' => [$basePath . "/vendor"],
             ],
             $userConfig
         );
 
 
         $clientBuilder = ClientBuilder::create($options);
-
         $clientBuilder->setSdkVersion(Version::SDK_VERSION);
         $clientBuilder->setSdkIdentifier(Version::SDK_IDENTIFIER);
 

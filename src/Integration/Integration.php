@@ -1,16 +1,12 @@
 <?php
-namespace Minbaby\HyperfSentry;
+namespace Minbaby\HyperfSentry\Integration;
 
-use Psr\Container\ContainerInterface;
+use Minbaby\HyperfSentry\SentryContext;
 use Sentry\Breadcrumb;
 use Sentry\Event;
 use Sentry\FlushableClientInterface;
 use Sentry\Integration\IntegrationInterface;
-use Sentry\SentrySdk;
 use Sentry\State\Scope;
-
-use function Sentry\addBreadcrumb;
-use function Sentry\configureScope;
 
 class Integration implements IntegrationInterface
 {

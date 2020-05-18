@@ -3,17 +3,11 @@
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
+use Minbaby\HyperfSentry\Integration\Integration;
 use Psr\Container\ContainerInterface;
 use Sentry\ClientBuilder;
-use Sentry\State\Hub;
-use Sentry\SentrySdk;
-use Sentry\State\HubInterface;
-use Illuminate\Log\LogManager;
-use Sentry\ClientBuilderInterface;
-use Laravel\Lumen\Application as Lumen;
 use Sentry\Integration as SdkIntegration;
-use Illuminate\Foundation\Application as Laravel;
-use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
+use Sentry\State\Hub;
 
 class HubFactory
 {
@@ -65,7 +59,7 @@ class HubFactory
         return $hub;
     }
 
-        /**
+    /**
      * Resolve the integrations from the user configuration with the container.
      *
      * @return array

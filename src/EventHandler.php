@@ -2,6 +2,7 @@
 
 namespace Minbaby\HyperfSentry;
 
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\Database\Events\ConnectionEvent;
 use Hyperf\Database\Events\QueryExecuted;
 use Hyperf\Database\Events\TransactionBeginning;
@@ -10,6 +11,7 @@ use Hyperf\Database\Events\TransactionRolledBack;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Event\ListenerProvider;
 use Hyperf\Logger\LoggerFactory;
+use Minbaby\HyperfSentry\Integration\Integration;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Sentry\Breadcrumb;
@@ -28,10 +30,16 @@ class EventHandler
     /** @var ListenerProvider */
     protected $event;
 
+    /**
+     * @var array
+     */
+    protected $config;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
         $this->event = $this->container->get(ListenerProviderInterface::class);
+        $this->config = $this->container->get(ConfigInterface::class)->get('sentry', []);
     }
 
     public function subscribe()
@@ -91,17 +99,18 @@ class EventHandler
      */
     protected function queryExecutedHandler(object $event)
     {
-        $data = ['connectionName' => $event->connectionName];
+        if (!data_get($this->config, 'breadcrumbs.sql_queries', false)) {
+            return;
+        }
+            $data = ['connectionName' => $event->connectionName];
 
         if ($event->time !== null) {
             $data['executionTimeMs'] = $event->time;
         }
 
-        //TODO
-//        if ($this->recordSqlBindings) {
+        if (data_get($this->config, 'breadcrumbs.sql_bindings', false)) {
             $data['bindings'] = $event->bindings;
-//        }
-
+        }
 
         Integration::addBreadcrumb(new Breadcrumb(
             Breadcrumb::LEVEL_INFO,
