@@ -14,10 +14,10 @@ matrix:
   allow_failures:
     - php: master
 
-services:
-  - mysql
-  - redis-server
-  - docker
+# services:
+  # - mysql
+  # - redis-server
+  # - docker
 
 before_install:
   - export PHP_MAJOR="$(`phpenv which php` -r 'echo phpversion();' | cut -d '.' -f 1)"
