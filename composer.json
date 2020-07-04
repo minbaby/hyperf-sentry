@@ -20,16 +20,16 @@
     },
     "require": {
         "php": ">=7.2",
-        "ext-swoole": ">=4.4",
-        "hyperf/framework": "1.1.*",
-        "hyperf/di": "1.1.*",
+        "ext-swoole": ">=4.5",
+        "hyperf/framework": "2.0.*",
+        "hyperf/di": "2.0.*",
         "sentry/sdk": "^2.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
-        "hyperf/testing": "1.1.*",
+        "hyperf/testing": "2.0.*",
         "monolog/monolog": "^2.0",
-        "phpstan/phpstan": "^0.10.5",
+        "phpstan/phpstan": "^0.12",
         "swoft/swoole-ide-helper": "dev-master"
     },
     "config": {
