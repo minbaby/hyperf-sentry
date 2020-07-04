@@ -58,7 +58,7 @@ class EventHandler
 
         try {
             call_user_func_array([$this, $handlerMethod], $arguments);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             // Ignore
         }
     }
