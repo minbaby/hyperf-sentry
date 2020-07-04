@@ -6,7 +6,6 @@ namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\ExceptionHandler\ExceptionHandler;
-use Hyperf\Logger\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sentry\ClientBuilderInterface;
@@ -20,7 +19,6 @@ class SentryExceptionHandler extends ExceptionHandler
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->log = $this->container->get(LoggerFactory::class)->get('sentry');
     }
 
     /**
