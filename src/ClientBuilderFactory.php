@@ -48,7 +48,6 @@ class ClientBuilderFactory
         $clientBuilder = ClientBuilder::create($options);
         $clientBuilder->setSdkVersion(Version::SDK_VERSION);
         $clientBuilder->setSdkIdentifier(Version::SDK_IDENTIFIER);
-
         return $clientBuilder;
     }
 }

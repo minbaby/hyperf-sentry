@@ -9,7 +9,7 @@ use Hyperf\ExceptionHandler\ExceptionHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sentry\ClientBuilderInterface;
-use Sentry\FlushableClientInterface;
+use Sentry\ClientInterface;
 use Throwable;
 
 class SentryExceptionHandler extends ExceptionHandler
@@ -35,7 +35,7 @@ class SentryExceptionHandler extends ExceptionHandler
 
         SentryContext::getHub()->captureException($throwable);
 
-        if (($client = $clientBuilder->getClient()) instanceof FlushableClientInterface) {
+        if (($client = $clientBuilder->getClient()) instanceof ClientInterface) {
             $client->flush((int) $config->get('sentry.flush_timeout', 2));
         }
 

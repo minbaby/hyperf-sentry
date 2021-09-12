@@ -6,8 +6,8 @@ namespace Minbaby\HyperfSentry\Integration;
 
 use Minbaby\HyperfSentry\SentryContext;
 use Sentry\Breadcrumb;
+use Sentry\ClientInterface;
 use Sentry\Event;
-use Sentry\FlushableClientInterface;
 use Sentry\Integration\IntegrationInterface;
 use Sentry\State\Scope;
 
@@ -90,7 +90,7 @@ class Integration implements IntegrationInterface
     {
         $client = SentryContext::getHub()->getClient();
 
-        if ($client instanceof FlushableClientInterface) {
+        if ($client instanceof ClientInterface) {
             $client->flush();
         }
     }

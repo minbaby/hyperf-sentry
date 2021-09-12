@@ -19,7 +19,7 @@
         }
     },
     "require": {
-        "sentry/sdk": "^2.1"
+        "sentry/sdk": "^3.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",

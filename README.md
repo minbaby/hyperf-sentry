@@ -8,6 +8,23 @@
 - https://docs.sentry.io/platforms/php/guides/laravel/
 - https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
 
+## 已知问题
+
+sentry/sdk 依赖的 http 类库报错
+
+    可能会报错 `Argument 1 passed to swoole_curl_setopt() must be an instance of Swoole\Curl\Handler, null given`
+   - `vendor/sentry/sentry/src/Transport/HttpTransport.php:110`
+   - `vendor/symfony/http-client/Response/CurlResponse.php:74`
+   
+解决方案：
+
+1. 编译 `swoole` 的时候， 需要启用 ` --enable-swoole-curl` 参数，
+2. 关闭CURL HOOK，修改 `SWOOLE_HOOK_FLAGS` to `SWOOLE_HOOK_ALL ^ SWOOLE_HOOK_CURL`
+
+    ```
+    ! defined('SWOOLE_HOOK_FLAGS') && define('SWOOLE_HOOK_FLAGS', SWOOLE_HOOK_ALL^SWOOLE_HOOK_CURL);
+    ```
+
 ## 说明
 
 `sentry/sdk` 中导出都是静态属性，这个些操作在 `swoole` 的携程环境中会出现数据异常，所以涉及到的部分都需要 `rewrite`, 因为 `sentry/sdk` 中的类大部分都是 `final` 的。

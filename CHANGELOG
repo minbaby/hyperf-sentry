@@ -1,5 +1,6 @@
 v2.2.0:
-    - 移除不必要的包限制，转为靠 hyperf 限制
+    - 移除不必要的包限制，转为靠 `hyperf` 限制
+    - upgrade to `sentry/sdk:^3.0`
 
 v2.0.0:
     - 升级 hyperf 依赖到 2.0
