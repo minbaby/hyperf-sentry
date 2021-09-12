@@ -2,11 +2,13 @@
 
 ## WARNING
 
-原版sentry更新比较多，如果需要可以自行 fork 然后修改。
+1. 原版sentry更新比较多，如果需要可以自行 fork 然后修改。
 
-- https://docs.sentry.io/platforms/php/
-- https://docs.sentry.io/platforms/php/guides/laravel/
-- https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
+   - https://docs.sentry.io/platforms/php/
+   - https://docs.sentry.io/platforms/php/guides/laravel/
+   - https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
+
+2. 新版升级，需要熟悉 `sentry/sdk`， 改动较多
 
 ## 已知问题
 
