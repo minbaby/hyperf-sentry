@@ -19,10 +19,6 @@
         }
     },
     "require": {
-        "php": ">=7.2",
-        "ext-swoole": ">=4.5",
-        "hyperf/framework": "2.0.*",
-        "hyperf/di": "2.0.*",
         "sentry/sdk": "^2.1"
     },
     "require-dev": {

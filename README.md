@@ -1,5 +1,13 @@
 # hyperf sentry
 
+## WARNING
+
+原版sentry更新比较多，如果需要可以自行 fork 然后修改。
+
+- https://docs.sentry.io/platforms/php/
+- https://docs.sentry.io/platforms/php/guides/laravel/
+- https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
+
 ## 说明
 
 `sentry/sdk` 中导出都是静态属性，这个些操作在 `swoole` 的携程环境中会出现数据异常，所以涉及到的部分都需要 `rewrite`, 因为 `sentry/sdk` 中的类大部分都是 `final` 的。
@@ -12,6 +20,7 @@
 |-|-|-|
 |0.1.*|1.1.*|-|
 |2.0.*|2.0.*|-|
+|2.2.*|>=2.2.*| 本次更新移除 hyperf 包依赖|
 
 ## 使用
 
