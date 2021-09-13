@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Minbaby\HyperfSentry;
 
+use Hyperf\Framework\Event\BootApplication;
+use Minbaby\HyperfSentry\Aspect\SingletonHookAspect;
 use Sentry\ClientBuilderInterface;
 use Sentry\State\HubInterface;
 
@@ -13,18 +15,24 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
-                HubInterface::class => HubFactory::class,
-                ClientBuilderInterface::class => ClientBuilderFactory::class,
             ],
             'commands' => [
+                TestCommand::class,
             ],
             'listeners' => [
                 AfterWorkerStartListener::class,
+                BootApplicationListener::class,
             ],
             'scan' => [
                 'paths' => [
                     __DIR__,
                 ],
+                'class_map' => [
+                    \Sentry\SentrySdk::class => BASE_PATH . '/vendor/minbaby/hyperf-sentry/src/class_map/SentrySdk.php',
+                ],
+            ],
+            'aspects' => [
+                SingletonHookAspect::class,
             ],
             'publish' => [
                 [

@@ -9,9 +9,11 @@
    - https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
 
 2. 新版升级，需要熟悉 `sentry/sdk`， 改动较多
-
+   - 使用 [class_map](https://hyperf.wiki/2.0/#/zh-cn/annotation?id=classmap-%e5%8a%9f%e8%83%bd) 重写 `\Sentry\SentrySdk` 
+   - 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
+   - 
 ## 已知问题
-
+   
 sentry/sdk 依赖的 http 类库报错
 
     可能会报错 `Argument 1 passed to swoole_curl_setopt() must be an instance of Swoole\Curl\Handler, null given`
@@ -29,7 +31,7 @@ sentry/sdk 依赖的 http 类库报错
 
 ## 说明
 
-`sentry/sdk` 中导出都是静态属性，这个些操作在 `swoole` 的携程环境中会出现数据异常，所以涉及到的部分都需要 `rewrite`, 因为 `sentry/sdk` 中的类大部分都是 `final` 的。
+`sentry/sdk` 类库经过更新迭代，当前版本已经非常现代化了(3.0+)。除了少部分单例和辅助方法，基本已经不需要特殊修改了。
 
 ## 版本
 
@@ -61,6 +63,7 @@ return [
     ],
 ];
 ```
+3. 执行 `php bin/hyperf.php sentry:test`
 
 ## 参考
 

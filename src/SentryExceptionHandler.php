@@ -10,6 +10,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Sentry\ClientBuilderInterface;
 use Sentry\ClientInterface;
+use Sentry\SentrySdk;
+use Sentry\State\HubInterface;
 use Throwable;
 
 class SentryExceptionHandler extends ExceptionHandler
@@ -23,21 +25,16 @@ class SentryExceptionHandler extends ExceptionHandler
 
     /**
      * Handle the exception, and return the specified result.
+     * @param \Throwable $throwable
+     * @param \Psr\Http\Message\ResponseInterface $response
      * @return ResponseInterface
      */
-    public function handle(Throwable $throwable, ResponseInterface $response)
+    public function handle(Throwable $throwable, ResponseInterface $response): ResponseInterface
     {
-        $clientBuilder = $this->container->get(ClientBuilderInterface::class);
+        $hub = $this->container->get(HubInterface::class);
+        $hub->captureException($throwable);
 
-        SentryContext::getHub();
-
-        $config = $this->container->get(ConfigInterface::class);
-
-        SentryContext::getHub()->captureException($throwable);
-
-        if (($client = $clientBuilder->getClient()) instanceof ClientInterface) {
-            $client->flush((int) $config->get('sentry.flush_timeout', 2));
-        }
+        $hub->getClient()->flush();
 
         return $response;
     }
