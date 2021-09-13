@@ -6,6 +6,7 @@ use Hyperf\Contract\ConfigInterface;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\AfterWorkerStart;
 use Hyperf\Framework\Event\BootApplication;
+use Hyperf\Server\ServerManager;
 use Minbaby\HyperfSentry\Integration\RequestFetcher;
 use Psr\Container\ContainerInterface;
 use Sentry\ClientBuilder;
@@ -56,7 +57,10 @@ class BootApplicationListener implements ListenerInterface
 
             unset($userConfig['breadcrumbs']);
 
-            $fetcher = $this->container->get(RequestFetcher::class);
+            $fetcher = null;
+            if (ServerManager::list()) {
+                $fetcher = $this->container->get(RequestFetcher::class);
+            }
             $options = array_merge(
                 [
                     'prefixes' => [$basePath],
