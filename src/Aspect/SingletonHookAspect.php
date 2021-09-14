@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry\Aspect;
 
 use Hyperf\Di\Aop\AbstractAspect;
@@ -7,7 +9,7 @@ use Hyperf\Di\Aop\ProceedingJoinPoint;
 use Hyperf\Utils\Context;
 
 /**
- * Hook 不安全的单例实现
+ * Hook 不安全的单例实现.
  */
 class SingletonHookAspect extends AbstractAspect
 {
@@ -20,19 +22,18 @@ class SingletonHookAspect extends AbstractAspect
     ];
 
     /**
-     * @param \Hyperf\Di\Aop\ProceedingJoinPoint $proceedingJoinPoint
-     * @return mixed
      * @throws \Hyperf\Di\Exception\Exception
+     * @return mixed
      */
     public function process(ProceedingJoinPoint $proceedingJoinPoint)
     {
         if ($proceedingJoinPoint->methodName == 'getInstance') {
             $key = $proceedingJoinPoint->className;
             $args = $proceedingJoinPoint->getArguments();
-            if (!empty($args)) {
+            if (! empty($args)) {
                 $key .= $args[0];
             }
-            if (!Context::has($key)) {
+            if (! Context::has($key)) {
                 Context::set($key, $proceedingJoinPoint->process());
             }
 

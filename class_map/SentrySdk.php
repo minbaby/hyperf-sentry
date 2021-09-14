@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sentry;
 
 use Hyperf\Utils\Context;
@@ -12,7 +14,7 @@ use Sentry\State\HubInterface;
 class SentrySdk
 {
     /**
-     * @var HubInterface|null The current hub
+     * @var null|HubInterface The current hub
      */
     private static $currentHub;
 
@@ -29,7 +31,6 @@ class SentrySdk
      */
     public static function init(): HubInterface
     {
-        echo __CLASS__, PHP_EOL;
         Context::set(__CLASS__, new Hub());
 
         return Context::get(__CLASS__);
@@ -41,7 +42,7 @@ class SentrySdk
      */
     public static function getCurrentHub(): HubInterface
     {
-        if (!Context::has(__CLASS__)) {
+        if (! Context::has(__CLASS__)) {
             Context::set(__CLASS__, new Hub());
         }
 

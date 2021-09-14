@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Minbaby\HyperfSentry;
 
-use Hyperf\Framework\Event\BootApplication;
 use Minbaby\HyperfSentry\Aspect\SingletonHookAspect;
-use Sentry\ClientBuilderInterface;
-use Sentry\State\HubInterface;
 
 class ConfigProvider
 {

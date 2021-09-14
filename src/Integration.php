@@ -28,7 +28,7 @@ class Integration implements IntegrationInterface
         Scope::addGlobalEventProcessor(function (Event $event): Event {
             $self = SentrySdk::getCurrentHub()->getIntegration(self::class);
 
-            if (!$self instanceof self) {
+            if (! $self instanceof self) {
                 return $event;
             }
 
@@ -41,15 +41,13 @@ class Integration implements IntegrationInterface
     }
 
     /**
-     * Adds a breadcrumb
-     *
-     * @param Breadcrumb $breadcrumb
+     * Adds a breadcrumb.
      */
     public static function addBreadcrumb(Breadcrumb $breadcrumb): void
     {
         $self = SentrySdk::getCurrentHub()->getIntegration(self::class);
 
-        if (!$self instanceof self) {
+        if (! $self instanceof self) {
             return;
         }
 
@@ -57,32 +55,24 @@ class Integration implements IntegrationInterface
     }
 
     /**
-     * Configures the scope
-     *
-     * @param callable $callback
+     * Configures the scope.
      */
     public static function configureScope(callable $callback): void
     {
         $self = SentrySdk::getCurrentHub()->getIntegration(self::class);
 
-        if (!$self instanceof self) {
+        if (! $self instanceof self) {
             return;
         }
 
         configureScope($callback);
     }
 
-    /**
-     * @return null|string
-     */
     public static function getTransaction(): ?string
     {
         return self::$transaction;
     }
 
-    /**
-     * @param null|string $transaction
-     */
     public static function setTransaction(?string $transaction): void
     {
         self::$transaction = $transaction;
@@ -91,8 +81,8 @@ class Integration implements IntegrationInterface
     /**
      * Block until all async events are processed for the HTTP transport.
      *
-     * @internal This is not part of the public API and is here temporarily until
-     *  the underlying issue can be resolved, this method will be removed.
+     * @internal this is not part of the public API and is here temporarily until
+     *  the underlying issue can be resolved, this method will be removed
      */
     public static function flushEvents(): void
     {
@@ -105,8 +95,6 @@ class Integration implements IntegrationInterface
 
     /**
      * Retrieve the meta tags with tracing information to link this request to front-end requests.
-     *
-     * @return string
      */
     public static function sentryTracingMeta(): string
     {
@@ -116,18 +104,14 @@ class Integration implements IntegrationInterface
             return '';
         }
 
-        $content = sprintf('<meta name="sentry-trace" content="%s"/>', $span->toTraceparent());
+        return sprintf('<meta name="sentry-trace" content="%s"/>', $span->toTraceparent());
         // $content .= sprintf('<meta name="sentry-trace-data" content="%s"/>', $span->getDescription());
-
-        return $content;
     }
 
     /**
      * Get the current active tracing span from the scope.
      *
-     * @return \Sentry\Tracing\Span|null
-     *
-     * @internal This is used internally as an easy way to retrieve the current active tracing span.
+     * @internal this is used internally as an easy way to retrieve the current active tracing span
      */
     public static function currentTracingSpan(): ?Span
     {

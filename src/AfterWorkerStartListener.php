@@ -11,7 +11,7 @@ use Psr\Container\ContainerInterface;
 class AfterWorkerStartListener implements ListenerInterface
 {
     /**
-     * @var \Psr\Container\ContainerInterface|\Hyperf\Di\Container
+     * @var \Hyperf\Di\Container|\Psr\Container\ContainerInterface
      */
     protected $container;
 
