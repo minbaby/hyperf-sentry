@@ -11,7 +11,6 @@ use Hyperf\Database\Events\TransactionBeginning;
 use Hyperf\Database\Events\TransactionCommitted;
 use Hyperf\Database\Events\TransactionRolledBack;
 use Hyperf\Event\ListenerProvider;
-use Minbaby\HyperfSentry\Integration\Integration;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Sentry\Breadcrumb;
@@ -50,7 +49,7 @@ class EventHandler
      */
     public function __call($method, $arguments)
     {
-        $handlerMethod = $handlerMethod = "{$method}Handler";
+        $handlerMethod = "{$method}Handler";
 
         if (! method_exists($this, $handlerMethod)) {
             throw new \RuntimeException("Missing event handler: {$handlerMethod}");

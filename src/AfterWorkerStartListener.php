@@ -7,10 +7,12 @@ namespace Minbaby\HyperfSentry;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\AfterWorkerStart;
 use Psr\Container\ContainerInterface;
-use Sentry\ClientBuilderInterface;
 
 class AfterWorkerStartListener implements ListenerInterface
 {
+    /**
+     * @var \Hyperf\Di\Container|\Psr\Container\ContainerInterface
+     */
     protected $container;
 
     public function __construct(ContainerInterface $container)
@@ -35,9 +37,6 @@ class AfterWorkerStartListener implements ListenerInterface
      */
     public function process(object $event)
     {
-        // 实例化
-        $this->container->get(ClientBuilderInterface::class);
-
         $eventHandler = $this->container->get(EventHandler::class);
         $eventHandler->subscribe();
     }
