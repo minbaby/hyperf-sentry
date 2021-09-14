@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Minbaby\HyperfSentry;
 
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\Event\Contract\ListenerInterface;
 use Hyperf\Framework\Event\AfterWorkerStart;
 use Hyperf\Framework\Event\BootApplication;
+use Hyperf\Logger\LoggerFactory;
 use Hyperf\Server\ServerManager;
 use Minbaby\HyperfSentry\Integration\RequestFetcher;
 use Psr\Container\ContainerInterface;
@@ -19,7 +22,7 @@ use Sentry\State\HubInterface;
 class BootApplicationListener implements ListenerInterface
 {
     /**
-     * @var \Psr\Container\ContainerInterface|\Hyperf\Di\Container
+     * @var \Hyperf\Di\Container|\Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -76,6 +79,7 @@ class BootApplicationListener implements ListenerInterface
 
             $clientBuilder->setSdkIdentifier(Version::SDK_IDENTIFIER);
             $clientBuilder->setSdkVersion(Version::SDK_VERSION);
+            $clientBuilder->setLogger($this->container->get(LoggerFactory::class)->get('sentry'));
 
             return $clientBuilder;
         });

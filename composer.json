@@ -27,6 +27,7 @@
         "hyperf/database": "^2.0",
         "hyperf/di": "^2.0",
         "hyperf/framework": "^2.0",
+        "hyperf/logger": "^2.0",
         "hyperf/testing": "^2.0",
         "monolog/monolog": "^2.0",
         "phpstan/phpstan": "^0.12",

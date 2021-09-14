@@ -8,30 +8,29 @@
    - https://docs.sentry.io/platforms/php/guides/laravel/
    - https://docs.sentry.io/platforms/php/guides/laravel/other-versions/lumen/
 
-2. 新版升级，需要熟悉 `sentry/sdk`， 改动较多
+2. 新版升级，改动较多
    - 使用 [class_map](https://hyperf.wiki/2.0/#/zh-cn/annotation?id=classmap-%e5%8a%9f%e8%83%bd) 重写 `\Sentry\SentrySdk` 
    - 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
-   - 
+
 ## 已知问题
    
-sentry/sdk 依赖的 http 类库报错
+1. sentry/sdk 依赖的 http 类库报错
 
-    可能会报错 `Argument 1 passed to swoole_curl_setopt() must be an instance of Swoole\Curl\Handler, null given`
-   - `vendor/sentry/sentry/src/Transport/HttpTransport.php:110`
-   - `vendor/symfony/http-client/Response/CurlResponse.php:74`
+    报错 `Argument 1 passed to swoole_curl_setopt() must be an instance of Swoole\Curl\Handler, null given`
+    - `vendor/sentry/sentry/src/Transport/HttpTransport.php:110`
+    - `vendor/symfony/http-client/Response/CurlResponse.php:74`
    
-解决方案：
+    解决方案：
 
-1. 编译 `swoole` 的时候， 需要启用 ` --enable-swoole-curl` 参数，
-2. 关闭CURL HOOK，修改 `SWOOLE_HOOK_FLAGS` to `SWOOLE_HOOK_ALL ^ SWOOLE_HOOK_CURL`
+    1. 编译 `swoole` 的时候， 需要启用 ` --enable-swoole-curl` 参数，
+    2. 关闭CURL HOOK，修改 `SWOOLE_HOOK_FLAGS` to `SWOOLE_HOOK_ALL ^ SWOOLE_HOOK_CURL`
 
-    ```
-    ! defined('SWOOLE_HOOK_FLAGS') && define('SWOOLE_HOOK_FLAGS', SWOOLE_HOOK_ALL^SWOOLE_HOOK_CURL);
-    ```
-
+    说明：
+      1. 从 v4.5.4 版本起，`SWOOLE_HOOK_ALL` 包括 `SWOOLE_HOOK_CURL` （这种是不完全hook，在某些场景下会报错）
+      2. 从 v4.6.0 版本起，启用`--enable-swoole-curl`后， `SWOOLE_HOOK_ALL` 包括 `SWOOLE_HOOK_NATIVE_CURL`
 ## 说明
 
-`sentry/sdk` 类库经过更新迭代，当前版本已经非常现代化了(3.0+)。除了少部分单例和辅助方法，基本已经不需要特殊修改了。
+`sentry/sdk` 类库经过更新迭代，当前版本已经非常现代化了(3.0+)。再辅以 `Hyperf` 2.0+ 强大的 `AOP`功能，除了少部分单例和辅助方法，基本已经不需要特殊修改了。
 
 ## 版本
 
@@ -41,7 +40,7 @@ sentry/sdk 依赖的 http 类库报错
 |-|-|-|
 |0.1.*|1.1.*|-|
 |2.0.*|2.0.*|-|
-|2.2.*|>=2.2.*| 本次更新移除 hyperf 包依赖|
+|2.2.*|>=2.1.*| 本次更新移除 hyperf 包依赖|
 
 ## 使用
 
