@@ -43,14 +43,19 @@
 |2.2.*|>=2.1.*| 本次更新移除 hyperf 包依赖|
 
 ## 使用
+1. 安装
+ 
+```shell
+composer require minbaby/hyperf-sentry
+```
 
-1. 配置文件
+2. 配置文件
 
  发布： `php bin/hyperf.php vendor:publish minbaby/hyperf-sentry`
  
  然后在 `.env` 中添加 `SENTRY_DSN=`
 
-2. 注册 `SentryExceptionHandler`
+3. 注册 `SentryExceptionHandler`
 
 ```php
 return [
@@ -62,7 +67,7 @@ return [
     ],
 ];
 ```
-3. 执行 `php bin/hyperf.php sentry:test`
+4. 执行 `php bin/hyperf.php sentry:test`
 
 ## 参考
 
