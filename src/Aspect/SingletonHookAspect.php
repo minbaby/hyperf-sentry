@@ -25,7 +25,7 @@ class SingletonHookAspect extends AbstractAspect
      * @throws \Hyperf\Di\Exception\Exception
      * @return mixed
      */
-    public function process(ProceedingJoinPoint $proceedingJoinPoint): void
+    public function process(ProceedingJoinPoint $proceedingJoinPoint)
     {
         if ($proceedingJoinPoint->methodName == 'getInstance') {
             $key = $proceedingJoinPoint->className;
