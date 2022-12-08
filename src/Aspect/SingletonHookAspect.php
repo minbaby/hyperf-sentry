@@ -13,7 +13,7 @@ use Hyperf\Utils\Context;
  */
 class SingletonHookAspect extends AbstractAspect
 {
-    public $classes = [
+    public array $classes = [
         \Sentry\EventType::class,
         \Sentry\ResponseStatus::class,
         \Sentry\Integration\IntegrationRegistry::class,
