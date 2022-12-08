@@ -46,7 +46,7 @@ class BootApplicationListener implements ListenerInterface
      * complete before the event is returned to the EventDispatcher.
      * @param AfterWorkerStart|object $event
      */
-    public function process(object $event)
+    public function process(object $event): void
     {
         $this->configureAndRegisterClient();
     }
