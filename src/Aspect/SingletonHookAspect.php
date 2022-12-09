@@ -6,7 +6,7 @@ namespace Minbaby\HyperfSentry\Aspect;
 
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
-use Hyperf\Context\Context;
+use Hyperf\Context;
 
 /**
  * Hook 不安全的单例实现.
