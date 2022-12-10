@@ -19,6 +19,8 @@ use Sentry\SentrySdk;
 use Sentry\State\Hub;
 use Sentry\State\HubInterface;
 
+use const BASE_PATH;
+
 class BootApplicationListener implements ListenerInterface
 {
     /**
@@ -46,7 +48,7 @@ class BootApplicationListener implements ListenerInterface
      * complete before the event is returned to the EventDispatcher.
      * @param AfterWorkerStart|object $event
      */
-    public function process(object $event)
+    public function process(object $event): void
     {
         $this->configureAndRegisterClient();
     }
@@ -56,7 +58,7 @@ class BootApplicationListener implements ListenerInterface
         $this->container->define(ClientBuilderInterface::class, function () {
             $userConfig = $this->getUserConfig();
 
-            $basePath = defined('\BASE_PATH') ? \BASE_PATH : '';
+            $basePath = defined('\BASE_PATH') ? BASE_PATH : '';
 
             unset($userConfig['breadcrumbs']);
 

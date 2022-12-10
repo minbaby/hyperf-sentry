@@ -20,10 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class TestCommand extends HyperfCommand
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
@@ -103,11 +100,6 @@ class TestCommand extends HyperfCommand
 
     /**
      * Generate a test exception to send to Sentry.
-     *
-     * @param $command
-     * @param $arg
-     *
-     * @return \Exception
      */
     protected function generateTestException($command, $arg): ?Exception
     {

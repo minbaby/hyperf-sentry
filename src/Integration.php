@@ -10,15 +10,13 @@ use Sentry\Integration\IntegrationInterface;
 use Sentry\SentrySdk;
 use Sentry\State\Scope;
 use Sentry\Tracing\Span;
+
 use function Sentry\addBreadcrumb;
 use function Sentry\configureScope;
 
 class Integration implements IntegrationInterface
 {
-    /**
-     * @var null|string
-     */
-    private static $transaction;
+    private static ?string $transaction;
 
     /**
      * {@inheritdoc}

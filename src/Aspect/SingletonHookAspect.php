@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Minbaby\HyperfSentry\Aspect;
 
+use Hyperf\Context\Context;
 use Hyperf\Di\Aop\AbstractAspect;
 use Hyperf\Di\Aop\ProceedingJoinPoint;
-use Hyperf\Utils\Context;
+use Hyperf\Di\Exception\Exception;
 
 /**
  * Hook 不安全的单例实现.
  */
 class SingletonHookAspect extends AbstractAspect
 {
-    public $classes = [
+    public array $classes = [
         \Sentry\EventType::class,
         \Sentry\ResponseStatus::class,
         \Sentry\Integration\IntegrationRegistry::class,
@@ -22,10 +23,9 @@ class SingletonHookAspect extends AbstractAspect
     ];
 
     /**
-     * @throws \Hyperf\Di\Exception\Exception
-     * @return mixed
+     * @throws Exception
      */
-    public function process(ProceedingJoinPoint $proceedingJoinPoint)
+    public function process(ProceedingJoinPoint $proceedingJoinPoint): mixed
     {
         if ($proceedingJoinPoint->methodName == 'getInstance') {
             $key = $proceedingJoinPoint->className;
