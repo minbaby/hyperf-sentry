@@ -43,7 +43,7 @@
         "analyse": "phpstan analyse --memory-limit 300M -l 0 ./src",
         "cs-fix": "php-cs-fixer fix $1"
     },
-    "minimum-stability": "rc",
+    "minimum-stability": "RC",
     "extra": {
         "hyperf": {
             "config": "Minbaby\\HyperfSentry\\ConfigProvider"
