@@ -10,10 +10,7 @@ use Psr\Container\ContainerInterface;
 
 class AfterWorkerStartListener implements ListenerInterface
 {
-    /**
-     * @var \Hyperf\Di\Container|\Psr\Container\ContainerInterface
-     */
-    protected $container;
+    protected \Hyperf\Di\Container|ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
@@ -35,7 +32,7 @@ class AfterWorkerStartListener implements ListenerInterface
      * complete before the event is returned to the EventDispatcher.
      * @param AfterWorkerStart|object $event
      */
-    public function process(object $event)
+    public function process(object $event): void
     {
         $eventHandler = $this->container->get(EventHandler::class);
         $eventHandler->subscribe();

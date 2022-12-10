@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sentry;
 
-use Hyperf\Utils\Context;
+use Hyperf\Context\Context;
 use Sentry\State\Hub;
 use Sentry\State\HubInterface;
 
@@ -16,7 +16,7 @@ class SentrySdk
     /**
      * @var null|HubInterface The current hub
      */
-    private static $currentHub;
+    private static ?HubInterface $currentHub;
 
     /**
      * Constructor.

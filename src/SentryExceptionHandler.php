@@ -12,7 +12,7 @@ use Throwable;
 
 class SentryExceptionHandler extends ExceptionHandler
 {
-    protected $container;
+    protected ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {
