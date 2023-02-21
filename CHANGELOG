@@ -1,8 +1,18 @@
+v2.2.2:
+- #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
+
+v2.2.1:
+- @ljyljy0211 [Update README.md](https://github.com/minbaby/hyperf-sentry/pull/12)
+
 v2.2.0:
-    - 移除不必要的包限制，转为靠 `hyperf` 限制
-    - upgrade to `sentry/sdk:^3.0`
-    - 使用 [class_map](https://hyperf.wiki/2.0/#/zh-cn/annotation?id=classmap-%e5%8a%9f%e8%83%bd) 重写 `\Sentry\SentrySdk`
-    - 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
-	- 增加 `php bin/hyperf.php sentry:test` 命令
+- 移除不必要的包限制，转为靠 `hyperf` 限制
+- upgrade to `sentry/sdk:^3.0`
+- 使用 [class_map](https://hyperf.wiki/2.0/#/zh-cn/annotation?id=classmap-%e5%8a%9f%e8%83%bd) 重写 `\Sentry\SentrySdk`
+- 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
+- 增加 `php bin/hyperf.php sentry:test` 命令
+
+v2.0.1:
+- #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
+
 v2.0.0:
-    - 升级 hyperf 依赖到 2.0
+- 升级 hyperf 依赖到 2.0
