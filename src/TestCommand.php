@@ -100,6 +100,8 @@ class TestCommand extends HyperfCommand
 
     /**
      * Generate a test exception to send to Sentry.
+     * @param mixed $command
+     * @param mixed $arg
      */
     protected function generateTestException($command, $arg): ?Exception
     {
