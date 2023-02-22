@@ -10,6 +10,9 @@ v3.0.0:
 - [限制 php:>=8.0](https://github.com/hyperf/hyperf/blob/3.0/composer.json#LL19C13-L19C13)
 - upgrade php-cs-fixer >=3.12.0
 
+v2.2.3:
+- #17 修复class_map 地址错误
+
 v2.2.2:
 - #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
 
@@ -22,6 +25,9 @@ v2.2.0:
 - 使用 [class_map](https://hyperf.wiki/2.0/#/zh-cn/annotation?id=classmap-%e5%8a%9f%e8%83%bd) 重写 `\Sentry\SentrySdk`
 - 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
 - 增加 `php bin/hyperf.php sentry:test` 命令
+
+v2.0.2:
+- remove `class_map`
 
 v2.0.1:
 - #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
