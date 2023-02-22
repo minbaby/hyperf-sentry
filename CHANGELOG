@@ -1,3 +1,6 @@
+v2.2.3:
+- #17 修复class_map 地址错误
+
 v2.2.2:
 - #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
 
