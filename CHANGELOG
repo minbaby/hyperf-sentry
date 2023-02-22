@@ -14,6 +14,9 @@ v2.2.0:
 - 使用 Aspect，拦截单例，`Minbaby\HyperfSentry\Aspect\SingletonHookAspect::class`
 - 增加 `php bin/hyperf.php sentry:test` 命令
 
+v2.0.2:
+- remove `class_map`
+
 v2.0.1:
 - #15 修复升级版本遗漏更新 `ConfigProvider` 中 `scan` 的bug
 
