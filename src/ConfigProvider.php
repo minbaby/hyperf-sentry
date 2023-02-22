@@ -26,9 +26,6 @@ class ConfigProvider
                     'paths' => [
                         __DIR__,
                     ],
-                    'class_map' => [
-                        \Sentry\SentrySdk::class => BASE_PATH . '/vendor/minbaby/hyperf-sentry/src/class_map/SentrySdk.php',
-                    ],
                 ],
             ],
             'publish' => [
