@@ -33,7 +33,7 @@
         "hyperf/context": "~3.0.0",
         "monolog/monolog": "^2.0",
         "phpstan/phpstan": "^0.12",
-        "swoft/swoole-ide-helper": "dev-master"
+        "swoole/ide-helper": "dev-master"
     },
     "config": {
         "sort-packages": true
